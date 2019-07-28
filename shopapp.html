@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<style>
+.app{
+    margin-left: 35%;
+    margin-top: 10%;
+    /* border: solid grey 1px; */
+}
+.app {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 400px;
+    border-radius: 5px;
+  }
+  
+  .app:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  .head {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    padding: 20px 10px;
+  }
+  .inp1{
+    padding-top: 15px;
+    padding-bottom: 0.5px;
+    background-color: #f1f1f1;
+  } 
+  @media only screen and (max-width: 610px){
+    .app{
+        margin-left: 0%;
+        margin-top: 10%;
+        /* border: solid grey 1px; */
+    }
+  }
+</style>
+<body>
+
+<script>
+var app = angular.module("myShoppingList", []); 
+app.controller("myCtrl", function($scope) {
+    $scope.products = ["Milk", "Bread", "Cheese"];
+    $scope.addItem = function () {
+        $scope.errortext = "";
+        if (!$scope.addMe) {return;}        
+        if ($scope.products.indexOf($scope.addMe) == -1) {
+            $scope.products.push($scope.addMe);
+        } else {
+            $scope.errortext = "The item is already in your shopping list.";
+        }
+    }
+    $scope.removeItem = function (x) {
+        $scope.errortext = "";    
+        $scope.products.splice(x, 1);
+    }
+});
+</script>
+
+<div ng-app="myShoppingList" ng-controller="myCtrl" class="app" style="max-width:400px;">
+    <header class="head">
+        <h3>My Shopping List</h3>
+    </header>
+  <ul>
+    <li ng-repeat="x in products" style="padding: 16px;">{{x}}<span ng-click="removeItem($index)" style="cursor:pointer; float: right;">×</span></li>
+  </ul>
+  <div class="inp1" >
+        <input placeholder="Add shopping items here" ng-model="addMe" class="inp2" style="float: left; width:270px; margin-left: 7px; margin-right: 7px; height: 30px;">
+  
+  
+  <button ng-click="addItem()" style="width: 40px; height: 30px; padding: -5px">Add</button>
+  <p>{{errortext}}</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
